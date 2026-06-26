@@ -1,4 +1,4 @@
-import type { Call, Objects } from "hotscript";
+import type { Call, Objects, Pipe, Unions } from "hotscript";
 
 export function fromEntries<
   O extends Iterable<readonly [PropertyKey, unknown]>,
@@ -7,7 +7,7 @@ export function fromEntries<
 }
 
 export function entries<O extends object>(o: O) {
-  return Object.entries(o) as Call<Objects.Entries, O>;
+  return Object.entries(o) as Pipe<O, [Objects.Entries, Unions.ToTuple]>;
 }
 
 // mapValues - TODO
@@ -29,11 +29,11 @@ export function entries<O extends object>(o: O) {
 // camelCaseDeep - won't do
 
 export function keys<O extends object>(o: O) {
-  return Object.keys(o) as unknown as Call<Objects.Keys, O>;
+  return Object.keys(o) as Pipe<O, [Objects.Keys, Unions.ToTuple]>;
 }
 
 export function values<O extends object>(o: O) {
-  return Object.values(o) as Call<Objects.Values, O>;
+  return Object.values(o) as Pipe<O, [Objects.Values, Unions.ToTuple]>;
 }
 
 export function assign<O extends object, TO2 extends object>(o: O, o2: TO2) {
