@@ -1,6 +1,6 @@
 {
   "name": "coldscript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Runtime companions to HotScript - typed JavaScript utilities for strings, numbers, tuples, and objects whose return types are computed by HotScript.",
   "type": "module",
   "sideEffects": false,
@@ -37,12 +37,12 @@
     "objects"
   ],
   "author": "tijn <hoi@tijn.dev>",
+  "peerDependencies": {
+    "hotscript": "^1.0.13"
+  },
   "devDependencies": {
     "hotscript": "^1.0.13",
     "tsdown": "^0.22.0",
     "typescript": "^6.0.3"
-  },
-  "inlinedDependencies": {
-    "hotscript": "1.0.13"
   }
 }

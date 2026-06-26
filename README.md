@@ -6,8 +6,10 @@ typed utility functions for strings, numbers, tuples, and objects. return types 
 
 ## install
 
+coldscript is a runtime companion to [hotscript](https://github.com/gvergnaud/HOTScript). install both:
+
 ```bash
-npm install coldscript
+npm install coldscript hotscript
 ```
 
 ## usage
@@ -74,7 +76,7 @@ const merged = objects.assign({ a: 1 }, { b: 2 });
 
 ## how it works
 
-each function is a thin wrapper around the native js equivalent. the magic is in the return type, it's wired up to hotscript's type-level functions via `Call`, so typescript knows exactly what comes back.
+each function is a thin wrapper around the native js equivalent. the return types come from hotscript's type-level functions via `Call`, so typescript infers the same results you'd get from using hotscript directly.
 
 ```ts
 // coldscript
@@ -83,4 +85,4 @@ export function split<S extends string, TSep extends string>(s: S, sep: TSep) {
 }
 ```
 
-hotscript types are bundled at build time, so you don't need to install hotscript yourself.
+hotscript is a peer dependency — coldscript only provides the runtime implementations, while hotscript supplies the types.

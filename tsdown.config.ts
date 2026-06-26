@@ -5,4 +5,7 @@ export default defineConfig({
   platform: "neutral",
   dts: true,
   minify: true,
+  deps: {
+    neverBundle: ["hotscript"],
+  },
 });
