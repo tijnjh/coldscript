@@ -81,4 +81,18 @@ export function append<S extends string, TEnd extends string>(s: S, end: TEnd) {
   return (s + end) as Call<Strings.Append<TEnd, S>>;
 }
 
-// export function uppercase<S extends string>
+export function uppercase<S extends string>(s: S) {
+  return s.toUpperCase() as Call<Strings.Uppercase, S>;
+}
+
+export function lowercase<S extends string>(s: S) {
+  return s.toLowerCase() as Call<Strings.Lowercase, S>;
+}
+
+export function capitalize<S extends string>(s: S) {
+  return (s[0].toUpperCase() + s.slice(1)) as Call<Strings.Capitalize, S>;
+}
+
+export function uncapitalize<S extends string>(s: S) {
+  return (s[0].toLowerCase() + s.slice(1)) as Call<Strings.Uncapitalize, S>;
+}
