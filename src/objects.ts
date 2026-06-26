@@ -10,6 +10,24 @@ export function entries<O extends object>(o: O) {
   return Object.entries(o) as Call<Objects.Entries, O>;
 }
 
+// mapValues - TODO
+
+// mapKeys - TODO
+
+// kebabCase - won't do
+
+// snakeCase - won't do
+
+// camelCase - won't do
+
+// mapKeysDeep - TODO
+
+// kebabCaseDeep - won't do
+
+// snakeCaseDeep - won't do
+
+// camelCaseDeep - won't do
+
 export function keys<O extends object>(o: O) {
   return Object.keys(o) as unknown as Call<Objects.Keys, O>;
 }

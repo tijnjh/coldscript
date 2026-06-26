@@ -96,3 +96,19 @@ export function capitalize<S extends string>(s: S) {
 export function uncapitalize<S extends string>(s: S) {
   return (s[0].toLowerCase() + s.slice(1)) as Call<Strings.Uncapitalize, S>;
 }
+
+// snakeCase - won't do
+
+// camelCase - won't do
+
+// kebabCase - won't do
+
+// compare - TODO
+
+// lessThan - TODO
+
+// lessThanOrEqual - TODO
+
+// greaterThan - TODO
+
+// greaterThanOrEqual - TODO
