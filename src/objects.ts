@@ -1,9 +1,12 @@
 import type { Call, Objects, Pipe, Unions } from "hotscript";
 
 export function fromEntries<
-  O extends Iterable<readonly [PropertyKey, unknown]>,
+  const O extends readonly (readonly [PropertyKey, unknown])[],
 >(o: O) {
-  return Object.fromEntries(o) as Call<Objects.FromEntries, O>;
+  return Object.fromEntries(o) as Call<
+    Objects.FromEntries,
+    O[number] extends readonly [infer K, infer V] ? [K, V] : never
+  >;
 }
 
 export function entries<O extends object>(o: O) {
