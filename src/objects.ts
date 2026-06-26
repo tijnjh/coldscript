@@ -1,12 +1,13 @@
-import type { Call, Objects, Pipe, Unions } from "hotscript";
+import type { Call, Objects, Pipe, Tuples, Unions } from "hotscript";
 
-export function fromEntries<
-  const O extends readonly (readonly [PropertyKey, unknown])[],
->(o: O) {
-  return Object.fromEntries(o) as Call<
+export function fromEntries<const TEntries extends [PropertyKey, unknown][]>(
+  entries: TEntries,
+) {
+  return Object.fromEntries(entries) as Pipe<TEntries, [
+    Tuples.ToUnion,
     Objects.FromEntries,
-    O[number] extends readonly [infer K, infer V] ? [K, V] : never
-  >;
+    Unions.ToIntersection,
+  ]>;
 }
 
 export function entries<O extends object>(o: O) {
