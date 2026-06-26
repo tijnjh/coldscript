@@ -1,6 +1,6 @@
 {
   "name": "coldscript",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Runtime companions to HotScript - typed JavaScript utilities for strings, numbers, tuples, and objects whose return types are computed by HotScript.",
   "type": "module",
   "sideEffects": false,
