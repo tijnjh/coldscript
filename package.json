@@ -1,8 +1,9 @@
 {
   "name": "coldscript",
+  "version": "0.1.0",
+  "description": "Runtime companions to HotScript - typed JavaScript utilities for strings, numbers, tuples, and objects whose return types are computed by HotScript.",
   "type": "module",
-  "version": "0.0.0",
-  "description": "like hotscript but for the runtime",
+  "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
@@ -14,6 +15,28 @@
     "build": "tsdown",
     "dev": "tsdown --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tijnjh/coldscript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tijnjh/coldscript/issues"
+  },
+  "homepage": "https://github.com/tijnjh/coldscript#readme",
+  "keywords": [
+    "coldscript",
+    "hotscript",
+    "typescript",
+    "runtime",
+    "type-level",
+    "typed",
+    "utilities",
+    "strings",
+    "numbers",
+    "tuples",
+    "objects"
+  ],
+  "author": "tijn <hoi@tijn.dev>",
   "devDependencies": {
     "hotscript": "^1.0.13",
     "tsdown": "^0.22.0",
