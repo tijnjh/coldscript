@@ -1,0 +1,25 @@
+{
+  "name": "coldscript",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "like hotscript but for the runtime",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch"
+  },
+  "devDependencies": {
+    "hotscript": "^1.0.13",
+    "tsdown": "^0.22.0",
+    "typescript": "^6.0.3"
+  },
+  "inlinedDependencies": {
+    "hotscript": "1.0.13"
+  }
+}
