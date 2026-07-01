@@ -1,4 +1,4 @@
-import type { Call, Objects, Pipe, Tuples, Unions } from "hotscript";
+import type { Call, Objects, Pipe, Tuples, Unions } from 'hotscript'
 
 export function fromEntries<const TEntries extends [PropertyKey, unknown][]>(
   entries: TEntries,
@@ -7,11 +7,11 @@ export function fromEntries<const TEntries extends [PropertyKey, unknown][]>(
     Tuples.ToUnion,
     Objects.FromEntries,
     Unions.ToIntersection,
-  ]>;
+  ]>
 }
 
 export function entries<O extends object>(o: O) {
-  return Object.entries(o) as Pipe<O, [Objects.Entries, Unions.ToTuple]>;
+  return Object.entries(o) as Pipe<O, [Objects.Entries, Unions.ToTuple]>
 }
 
 // mapValues - TODO
@@ -33,13 +33,13 @@ export function entries<O extends object>(o: O) {
 // camelCaseDeep - won't do
 
 export function keys<O extends object>(o: O) {
-  return Object.keys(o) as Pipe<O, [Objects.Keys, Unions.ToTuple]>;
+  return Object.keys(o) as Pipe<O, [Objects.Keys, Unions.ToTuple]>
 }
 
 export function values<O extends object>(o: O) {
-  return Object.values(o) as Pipe<O, [Objects.Values, Unions.ToTuple]>;
+  return Object.values(o) as Pipe<O, [Objects.Values, Unions.ToTuple]>
 }
 
 export function assign<O extends object, TO2 extends object>(o: O, o2: TO2) {
-  return Object.assign(o, o2) as unknown as Call<Objects.Assign<TO2>, O>;
+  return Object.assign(o, o2) as unknown as Call<Objects.Assign<TO2>, O>
 }
