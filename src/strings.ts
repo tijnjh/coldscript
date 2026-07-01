@@ -1,101 +1,147 @@
 import type { Call, Strings } from 'hotscript'
+import { dual } from './utils/dual'
 
-export function length<S extends string>(s: S) {
-  return s.length as Call<Strings.Length, S>
-}
+export const length = dual<
+  () => <$ extends string>($: $) => Call<Strings.Length, $>,
+  <$ extends string>($: $) => Call<Strings.Length, $>
+>(1, ($): any => {
+  return $.length
+})
 
-export function trim<S extends string>(s: S) {
-  return s.trim() as Call<Strings.Trim, S>
-}
+export const trim = dual<
+  () => <$ extends string>($: $) => Call<Strings.Trim, $>,
+  <$ extends string>($: $) => Call<Strings.Trim, $>
+>(1, ($): any => {
+  return $.trim()
+})
 
-export function trimLeft<S extends string>(s: S) {
-  return s.trimStart() as Call<Strings.TrimLeft, S>
-}
+export const trimLeft = dual<
+  () => <$ extends string>($: $) => Call<Strings.TrimLeft, $>,
+  <$ extends string>($: $) => Call<Strings.TrimLeft, $>
+>(1, ($): any => {
+  return $.trimStart()
+})
 
-export function trimRight<S extends string>(s: S) {
-  return s.trimEnd() as Call<Strings.TrimRight, S>
-}
+export const trimRight = dual<
+  () => <$ extends string>($: $) => Call<Strings.TrimRight, $>,
+  <$ extends string>($: $) => Call<Strings.TrimRight, $>
+>(1, ($): any => {
+  return $.trimEnd()
+})
 
-export function replace<
-  S extends string,
-  TFrom extends string,
-  TTo extends string,
->(s: S, from: TFrom, to: TTo) {
-  return s.replaceAll(from, to) as Call<Strings.Replace<TFrom, TTo>, S>
-}
+export const replace = dual<
+  <TFrom extends string, TTo extends string>(from: TFrom, to: TTo) => <$ extends string>($: $) => Call<Strings.Replace<TFrom, TTo>, $>,
+  <$ extends string, TFrom extends string, TTo extends string>($: $, from: TFrom, to: TTo) => Call<Strings.Replace<TFrom, TTo>, $>
+>(3, ($, from, to): any => {
+  return $.replaceAll(from, to)
+})
 
-export function slice<
-  S extends string,
-  TStart extends number,
-  TEnd extends number,
->(s: S, start: TStart, end: TEnd) {
+export const slice = dual<
   // @ts-expect-error says the type is 'possibly infinite', but it works fine
-  return s.slice(start, end) as Call<Strings.Slice<TStart, TEnd>, S>
-}
+  <TStart extends number, TEnd extends number>(start: TStart, end: TEnd) => <$ extends string>($: $) => Call<Strings.Slice<TStart, TEnd>, S>,
+  // @ts-expect-error
+  <$ extends string, TStart extends number, TEnd extends number>($: $, start: TStart, end: TEnd) => Call<Strings.Slice<TStart, TEnd>, S>
+>(3, ($, start, end): any => {
+  return $.slice(start, end)
+})
 
-export function split<S extends string, TSep extends string>(s: S, sep: TSep) {
-  return s.split(sep) as Call<Strings.Split<TSep>, S>
-}
+export const split = dual<
+  <TSep extends string>(sep: TSep) => <$ extends string>($: $) => Call<Strings.Split<TSep>, $>,
+  <$ extends string, TSep extends string>($: $, sep: TSep) => Call<Strings.Split<TSep>, $>
+>(2, ($, sep): any => {
+  return $.split(sep)
+})
 
-export function repeat<S extends string, TTimes extends number>(
-  s: S,
-  times: TTimes,
-) {
-  return s.repeat(times) as Call<Strings.Repeat<TTimes>, S>
-}
+export const repeat = dual<
+  <TTimes extends number>(times: TTimes) => <$ extends string>($: $) => Call<Strings.Repeat<TTimes>, $>,
+  <$ extends string, TTimes extends number>($: $, times: TTimes) => Call<Strings.Repeat<TTimes>, $>
+>(2, (s, times): any => {
+  return s.repeat(times)
+})
 
-export function startsWith<S extends string, TStart extends string>(
-  s: S,
-  start: TStart,
-) {
-  return s.startsWith(start) as Call<Strings.StartsWith<TStart>, S>
-}
+// export function startsWith<S extends string, TStart extends string>(
+//   s: S,
+//   start: TStart,
+// ) {
+//   return s.startsWith(start) as Call<Strings.StartsWith<TStart>, S>
+// }
 
-export function endsWith<S extends string, TEnd extends string>(
-  s: S,
-  end: TEnd,
-) {
-  return s.endsWith(end) as Call<Strings.EndsWith<TEnd>, S>
-}
+export const startsWith = dual<
+  <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.StartsWith<TStart>, $>,
+  <$ extends string, TStart extends string>($: $, start: TStart) => Call<Strings.StartsWith<TStart>, $>
+>(2, (s, start): any => {
+  return s.startsWith(start)
+})
 
-export function toTuple<S extends string>(s: S) {
-  return s.split('') as Call<Strings.ToTuple, S>
-}
+export const endsWith = dual<
+  <TEnd extends string>(end: TEnd) => <$ extends string>($: $) => Call<Strings.EndsWith<TEnd>, $>,
+  <$ extends string, TEnd extends string>($: $, end: TEnd) => Call<Strings.EndsWith<TEnd>, $>
+>(2, (s, end): any => {
+  return s.endsWith(end)
+})
 
-export function toNumber<S extends string>(s: S) {
-  return Number(s) as Call<Strings.ToNumber, S>
-}
+export const toTuple = dual<
+  () => <$ extends string>($: $) => Call<Strings.ToTuple, $>,
+  <$ extends string>($: $) => Call<Strings.ToTuple, $>
+>(1, ($): any => {
+  return $.split('')
+})
 
-export function toString<S extends Strings.Stringifiable>(s: S) {
-  return String(s) as Call<Strings.ToString, S>
-}
+export const toNumber = dual<
+  () => <$ extends string>($: $) => Call<Strings.ToNumber, $>,
+  <$ extends string>($: $) => Call<Strings.ToNumber, $>
+>(1, ($): any => {
+  return Number($)
+})
 
-export function prepend<S extends string, TStart extends string>(
-  s: S,
-  start: TStart,
-) {
-  return (start + s) as Call<Strings.Prepend<TStart, S>>
-}
+export const toString = dual<
+  () => <$ extends Strings.Stringifiable>($: $) => Call<Strings.ToString, $>,
+  <$ extends Strings.Stringifiable>($: $) => Call<Strings.ToString, $>
+>(1, ($): any => {
+  return String($)
+})
 
-export function append<S extends string, TEnd extends string>(s: S, end: TEnd) {
-  return (s + end) as Call<Strings.Append<TEnd, S>>
-}
+export const prepend = dual<
+  <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.Prepend<TStart>, $>,
+  <$ extends string, TStart extends string>($: $, start: TStart) => Call<Strings.Prepend<TStart>, $>
+>(2, (s, start): any => {
+  return start + s
+})
 
-export function uppercase<S extends string>(s: S) {
-  return s.toUpperCase() as Call<Strings.Uppercase, S>
-}
+export const append = dual<
+  <TEnd extends string>(end: TEnd) => <$ extends string>($: $) => Call<Strings.Append<TEnd>, $>,
+  <$ extends string, TEnd extends string>($: $, end: TEnd) => Call<Strings.Append<TEnd>, $>
+>(2, (s, end): any => {
+  return s + end
+})
 
-export function lowercase<S extends string>(s: S) {
-  return s.toLowerCase() as Call<Strings.Lowercase, S>
-}
+export const uppercase = dual<
+  () => <$ extends string>($: $) => Call<Strings.Uppercase, $>,
+  <$ extends string>($: $) => Call<Strings.Uppercase, $>
+>(1, ($): any => {
+  return $.toUpperCase()
+})
 
-export function capitalize<S extends string>(s: S) {
-  return (s[0].toUpperCase() + s.slice(1)) as Call<Strings.Capitalize, S>
-}
+export const lowercase = dual<
+  () => <$ extends string>($: $) => Call<Strings.Lowercase, $>,
+  <$ extends string>($: $) => Call<Strings.Lowercase, $>
+>(1, ($): any => {
+  return $.toLowerCase()
+})
 
-export function uncapitalize<S extends string>(s: S) {
-  return (s[0].toLowerCase() + s.slice(1)) as Call<Strings.Uncapitalize, S>
-}
+export const capitalize = dual<
+  () => <$ extends string>($: $) => Call<Strings.Capitalize, $>,
+  <$ extends string>($: $) => Call<Strings.Capitalize, $>
+>(1, ($): any => {
+  return $.charAt(0).toUpperCase() + $.slice(1)
+})
+
+export const uncapitalize = dual<
+  () => <$ extends string>($: $) => Call<Strings.Uncapitalize, $>,
+  <$ extends string>($: $) => Call<Strings.Uncapitalize, $>
+>(1, ($): any => {
+  return $.charAt(0).toLowerCase() + $.slice(1)
+})
 
 // snakeCase - won't do
 
