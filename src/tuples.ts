@@ -82,29 +82,29 @@ export const sort = dual<
 })
 
 export const join = dual<
-  <TSep extends string>(sep: TSep) => <$ extends unknown[]>($: $) => Call<Tuples.Join<TSep>, $>,
-  <const $ extends unknown[], TSep extends string>($: $, sep: TSep) => Call<Tuples.Join<TSep>, $>
+  <const TSep extends string>(sep: TSep) => <$ extends unknown[]>($: $) => Call<Tuples.Join<TSep>, $>,
+  <const $ extends unknown[], const TSep extends string>($: $, sep: TSep) => Call<Tuples.Join<TSep>, $>
 >(2, ($, sep): any => {
   return $.join(sep)
 })
 
 export const prepend = dual<
-  <TElement>(element: TElement) => <$ extends unknown[]>($: $) => Call<Tuples.Prepend<TElement>, $>,
-  <const $ extends unknown[], TElement>($: $, element: TElement) => Call<Tuples.Prepend<TElement>, $>
+  <const TElement>(element: TElement) => <$ extends unknown[]>($: $) => Call<Tuples.Prepend<TElement>, $>,
+  <const $ extends unknown[], const TElement>($: $, element: TElement) => Call<Tuples.Prepend<TElement>, $>
 >(2, ($, element): any => {
   return [element, ...$]
 })
 
 export const append = dual<
-  <TElement>(element: TElement) => <$ extends unknown[]>($: $) => Call<Tuples.Append<TElement>, $>,
-  <const $ extends unknown[], TElement>($: $, element: TElement) => Call<Tuples.Append<TElement>, $>
+  <const TElement>(element: TElement) => <$ extends unknown[]>($: $) => Call<Tuples.Append<TElement>, $>,
+  <const $ extends unknown[], const TElement>($: $, element: TElement) => Call<Tuples.Append<TElement>, $>
 >(2, ($, element): any => {
   return [...$, element]
 })
 
 export const concat = dual<
-  <TTuple extends unknown[]>(tuple: TTuple) => <$ extends unknown[]>($: $) => Call<Tuples.Concat<TTuple>, $>,
-  <const $ extends unknown[], TTuple extends unknown[]>($: $, tuple: TTuple) => Call<Tuples.Concat<TTuple>, $>
+  <const TTuple extends unknown[]>(tuple: TTuple) => <$ extends unknown[]>($: $) => Call<Tuples.Concat<TTuple>, $>,
+  <const $ extends unknown[], const TTuple extends unknown[]>($: $, tuple: TTuple) => Call<Tuples.Concat<TTuple>, $>
 >(2, ($, tuple): any => {
   return [...$, ...tuple]
 })

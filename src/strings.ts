@@ -39,8 +39,7 @@ export const replace = dual<
 export const slice = dual<
   // @ts-expect-error says the type is 'possibly infinite', but it works fine
   <TStart extends number, TEnd extends number>(start: TStart, end: TEnd) => <$ extends string>($: $) => Call<Strings.Slice<TStart, TEnd>, S>,
-  // @ts-expect-error
-  <$ extends string, TStart extends number, TEnd extends number>($: $, start: TStart, end: TEnd) => Call<Strings.Slice<TStart, TEnd>, S>
+  <$ extends string, TStart extends number, TEnd extends number>($: $, start: TStart, end: TEnd) => Call<Strings.Slice<TStart, TEnd>, $>
 >(3, ($, start, end): any => {
   return $.slice(start, end)
 })
