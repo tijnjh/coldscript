@@ -1,7 +1,7 @@
 {
   "name": "coldscript",
   "type": "module",
-  "version": "0.1.5",
+  "version": "0.2.0-beta.0",
   "description": "Runtime companions to HotScript - typed JavaScript utilities for strings, numbers, tuples, and objects whose return types are computed by HotScript.",
   "author": "tijn <hoi@tijn.dev>",
   "homepage": "https://github.com/tijnjh/coldscript#readme",
