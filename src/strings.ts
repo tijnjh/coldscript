@@ -21,7 +21,7 @@ export function replace<
   TFrom extends string,
   TTo extends string,
 >(s: S, from: TFrom, to: TTo) {
-  return s.replace(from, to) as Call<Strings.Replace<TFrom, TTo>, S>;
+  return s.replaceAll(from, to) as Call<Strings.Replace<TFrom, TTo>, S>;
 }
 
 export function slice<
