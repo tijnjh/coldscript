@@ -17,7 +17,7 @@ npm install coldscript hotscript
 each module mirrors a hotscript namespace:
 
 ```ts
-import { numbers, objects, strings, tuples } from 'coldscript'
+import { numbers, objects, pipe, strings, tuples } from 'coldscript'
 ```
 
 ### strings
@@ -86,3 +86,5 @@ export function split<S extends string, TSep extends string>(s: S, sep: TSep) {
 ```
 
 hotscript is a peer dependency — coldscript only provides the runtime implementations, while hotscript supplies the types.
+
+the `dual` and `pipe` helpers are based on code taken from [effect-ts](https://github.com/Effect-TS/effect) and modified for coldscript.

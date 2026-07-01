@@ -74,6 +74,7 @@ export const sum = dual<
 
 // every - TODO
 
+// need to fix, runtime differs from hotscript impl
 export const sort = dual<
   () => <$ extends unknown[]>($: $) => Call<Tuples.Sort, $>,
   <const $ extends unknown[]>($: $) => Call<Tuples.Sort, $>
