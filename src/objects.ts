@@ -1,7 +1,7 @@
 import type { Call, Objects, Pipe, Tuples, Unions } from 'hotscript'
 import { dual } from './utils/dual'
 
-export function fromEntries<$ extends [PropertyKey, unknown][]>($: $) {
+export function fromEntries<const $ extends [PropertyKey, unknown][]>($: $) {
   return Object.fromEntries($) as Pipe<$, [
     Tuples.ToUnion,
     Objects.FromEntries,
@@ -9,7 +9,7 @@ export function fromEntries<$ extends [PropertyKey, unknown][]>($: $) {
   ]>
 }
 
-export function entries<$ extends object>($: $) {
+export function entries<const $ extends object>($: $) {
   return Object.entries($) as Pipe<$, [
     Objects.Entries,
     Unions.ToTuple,
@@ -34,11 +34,11 @@ export function entries<$ extends object>($: $) {
 
 // camelCaseDeep - won't do
 
-export function keys<$ extends object>($: $) {
+export function keys<const $ extends object>($: $) {
   return Object.keys($) as Pipe<$, [Objects.Keys, Unions.ToTuple]>
 }
 
-export function values<$ extends object>($: $) {
+export function values<const $ extends object>($: $) {
   return Object.values($) as Pipe<$, [Objects.Values, Unions.ToTuple]>
 }
 
