@@ -22,6 +22,6 @@ objects.values({
   a: 1,
   b: 2,
   c: 3,
-}) satisfies [1, 2, 3]
+}) satisfies (1 | 2 | 3)[]
 
 objects.assign({ a: 1 }, { b: 2 }) satisfies { a: 1, b: 2 }
