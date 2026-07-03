@@ -8,37 +8,25 @@ export const at = dual<
   return $.at(index)
 })
 
-export const isEmpty = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.IsEmpty, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.IsEmpty, $>
->(1, ($): any => {
-  return $.length === 0
-})
+export function isEmpty<T extends unknown[]>(t: T) {
+  return (t.length === 0) as Call<Tuples.IsEmpty, T>
+}
 
 // toUnion - no runtime equivalent
 
 // toIntersection - no runtime equivalent
 
-export const head = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Head, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Head, $>
->(1, ($): any => {
-  return $.at(0)
-})
+export function head<T extends unknown[]>(t: T) {
+  return t[0] as Call<Tuples.Head, T>
+}
 
-export const tail = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Tail, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Tail, $>
->(1, ($): any => {
-  return $.slice(1)
-})
+export function tail<T extends unknown[]>(t: T) {
+  return t.slice(1) as Call<Tuples.Tail, T>
+}
 
-export const last = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Last, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Last, $>
->(1, ($): any => {
-  return $[$.length - 1]
-})
+export function last<T extends unknown[]>(t: T) {
+  return t[t.length - 1] as Call<Tuples.Last, T>
+}
 
 // map - TODO
 
@@ -46,12 +34,9 @@ export const last = dual<
 
 // reduce - TODO
 
-export const reverse = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Reverse, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Reverse, $>
->(1, ($): any => {
-  return $.slice().reverse()
-})
+export function reverse<T extends unknown[]>(t: T) {
+  return t.slice().reverse() as Call<Tuples.Reverse, T>
+}
 
 // reduceRight - TODO
 
@@ -59,12 +44,9 @@ export const reverse = dual<
 
 // find - TODO
 
-export const sum = dual<
-  () => <$ extends number[]>($: $) => Call<Tuples.Sum, $>,
-  <const $ extends number[]>($: $) => Call<Tuples.Sum, $>
->(1, ($): any => {
-  return $.reduce((a, b) => a + b, 0)
-})
+export function sum<T extends number[]>(t: T) {
+  return t.reduce((a, b) => a + b, 0) as Call<Tuples.Sum, T>
+}
 
 // drop - TODO
 
@@ -75,12 +57,9 @@ export const sum = dual<
 // every - TODO
 
 // need to fix, runtime differs from hotscript impl
-export const sort = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Sort, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Sort, $>
->(1, ($): any => {
-  return $.slice().sort()
-})
+export function sort<T extends unknown[]>(t: T) {
+  return t.slice().sort() as Call<Tuples.Sort, T>
+}
 
 export const join = dual<
   <const TSep extends string>(sep: TSep) => <$ extends unknown[]>($: $) => Call<Tuples.Join<TSep>, $>,
@@ -122,23 +101,14 @@ export const concat = dual<
 
 // range - TODO
 
-export const length = dual<
-  () => <$ extends unknown[]>($: $) => Call<Tuples.Length, $>,
-  <const $ extends unknown[]>($: $) => Call<Tuples.Length, $>
->(1, ($): any => {
-  return $.length
-})
+export function length<T extends unknown[]>(t: T) {
+  return t.length as Call<Tuples.Length, T>
+}
 
-export const min = dual<
-  () => <$ extends number[]>($: $) => Call<Tuples.Min, $>,
-  <const $ extends number[]>($: $) => Call<Tuples.Min, $>
->(1, ($): any => {
-  return Math.min(...$)
-})
+export function min<T extends number[]>(t: T) {
+  return Math.min(...t) as Call<Tuples.Min, T>
+}
 
-export const max = dual<
-  () => <$ extends number[]>($: $) => Call<Tuples.Max, $>,
-  <const $ extends number[]>($: $) => Call<Tuples.Max, $>
->(1, ($): any => {
-  return Math.max(...$)
-})
+export function max<T extends number[]>(t: T) {
+  return Math.max(...t) as Call<Tuples.Max, T>
+}

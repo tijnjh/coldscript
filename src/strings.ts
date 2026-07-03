@@ -1,33 +1,21 @@
 import type { Call, Strings } from 'hotscript'
 import { dual } from './utils/dual'
 
-export const length = dual<
-  () => <$ extends string>($: $) => Call<Strings.Length, $>,
-  <$ extends string>($: $) => Call<Strings.Length, $>
->(1, ($): any => {
-  return $.length
-})
+export function length<$ extends string>($: $) {
+  return $.length as Call<Strings.Length, $>
+}
 
-export const trim = dual<
-  () => <$ extends string>($: $) => Call<Strings.Trim, $>,
-  <$ extends string>($: $) => Call<Strings.Trim, $>
->(1, ($): any => {
-  return $.trim()
-})
+export function trim<$ extends string>($: $) {
+  return $.trim() as Call<Strings.Trim, $>
+}
 
-export const trimLeft = dual<
-  () => <$ extends string>($: $) => Call<Strings.TrimLeft, $>,
-  <$ extends string>($: $) => Call<Strings.TrimLeft, $>
->(1, ($): any => {
-  return $.trimStart()
-})
+export function trimLeft<$ extends string>($: $) {
+  return $.trimStart() as Call<Strings.TrimLeft, $>
+}
 
-export const trimRight = dual<
-  () => <$ extends string>($: $) => Call<Strings.TrimRight, $>,
-  <$ extends string>($: $) => Call<Strings.TrimRight, $>
->(1, ($): any => {
-  return $.trimEnd()
-})
+export function trimRight<$ extends string>($: $) {
+  return $.trimEnd() as Call<Strings.TrimRight, $>
+}
 
 export const replace = dual<
   <TFrom extends string, TTo extends string>(from: TFrom, to: TTo) => <$ extends string>($: $) => Call<Strings.Replace<TFrom, TTo>, $>,
@@ -58,13 +46,6 @@ export const repeat = dual<
   return s.repeat(times)
 })
 
-// export function startsWith<S extends string, TStart extends string>(
-//   s: S,
-//   start: TStart,
-// ) {
-//   return s.startsWith(start) as Call<Strings.StartsWith<TStart>, S>
-// }
-
 export const startsWith = dual<
   <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.StartsWith<TStart>, $>,
   <$ extends string, TStart extends string>($: $, start: TStart) => Call<Strings.StartsWith<TStart>, $>
@@ -79,26 +60,17 @@ export const endsWith = dual<
   return s.endsWith(end)
 })
 
-export const toTuple = dual<
-  () => <$ extends string>($: $) => Call<Strings.ToTuple, $>,
-  <$ extends string>($: $) => Call<Strings.ToTuple, $>
->(1, ($): any => {
-  return $.split('')
-})
+export function toTuple<$ extends string>($: $) {
+  return $.split('') as Call<Strings.ToTuple, $>
+}
 
-export const toNumber = dual<
-  () => <$ extends string>($: $) => Call<Strings.ToNumber, $>,
-  <$ extends string>($: $) => Call<Strings.ToNumber, $>
->(1, ($): any => {
-  return Number($)
-})
+export function toNumber<$ extends string>($: $) {
+  return Number($) as Call<Strings.ToNumber, $>
+}
 
-export const toString = dual<
-  () => <$ extends Strings.Stringifiable>($: $) => Call<Strings.ToString, $>,
-  <$ extends Strings.Stringifiable>($: $) => Call<Strings.ToString, $>
->(1, ($): any => {
-  return String($)
-})
+export function toString<$ extends Strings.Stringifiable>($: $) {
+  return String($) as Call<Strings.ToString, $>
+}
 
 export const prepend = dual<
   <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.Prepend<TStart>, $>,
@@ -114,33 +86,21 @@ export const append = dual<
   return s + end
 })
 
-export const uppercase = dual<
-  () => <$ extends string>($: $) => Call<Strings.Uppercase, $>,
-  <$ extends string>($: $) => Call<Strings.Uppercase, $>
->(1, ($): any => {
-  return $.toUpperCase()
-})
+export function uppercase<$ extends string>($: $) {
+  return $.toUpperCase() as Call<Strings.Uppercase, $>
+}
 
-export const lowercase = dual<
-  () => <$ extends string>($: $) => Call<Strings.Lowercase, $>,
-  <$ extends string>($: $) => Call<Strings.Lowercase, $>
->(1, ($): any => {
-  return $.toLowerCase()
-})
+export function lowercase<$ extends string>($: $) {
+  return $.toLowerCase() as Call<Strings.Lowercase, $>
+}
 
-export const capitalize = dual<
-  () => <$ extends string>($: $) => Call<Strings.Capitalize, $>,
-  <$ extends string>($: $) => Call<Strings.Capitalize, $>
->(1, ($): any => {
-  return $.charAt(0).toUpperCase() + $.slice(1)
-})
+export function capitalize<$ extends string>($: $) {
+  return $.charAt(0).toUpperCase() + $.slice(1) as Call<Strings.Capitalize, $>
+}
 
-export const uncapitalize = dual<
-  () => <$ extends string>($: $) => Call<Strings.Uncapitalize, $>,
-  <$ extends string>($: $) => Call<Strings.Uncapitalize, $>
->(1, ($): any => {
-  return $.charAt(0).toLowerCase() + $.slice(1)
-})
+export function uncapitalize<$ extends string>($: $) {
+  return $.charAt(0).toLowerCase() + $.slice(1) as Call<Strings.Uncapitalize, $>
+}
 
 // snakeCase - won't do
 

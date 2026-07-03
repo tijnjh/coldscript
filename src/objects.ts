@@ -1,19 +1,20 @@
 import type { Call, Objects, Pipe, Tuples, Unions } from 'hotscript'
 import { dual } from './utils/dual'
 
-export const fromEntries = dual<
-  () => <const $ extends [PropertyKey, unknown][]>($: $) => Pipe<$, [Tuples.ToUnion, Objects.FromEntries, Unions.ToIntersection]>,
-  <const $ extends [PropertyKey, unknown][]>($: $) => Pipe<$, [Tuples.ToUnion, Objects.FromEntries, Unions.ToIntersection]>
->(1, ($): any => {
-  return Object.fromEntries($)
-})
+export function fromEntries<$ extends [PropertyKey, unknown][]>($: $) {
+  return Object.fromEntries($) as Pipe<$, [
+    Tuples.ToUnion,
+    Objects.FromEntries,
+    Unions.ToIntersection,
+  ]>
+}
 
-export const entries = dual<
-  () => <const $ extends object>($: $) => Pipe<$, [Objects.Entries, Unions.ToTuple]>,
-  <const $ extends object>($: $) => Pipe<$, [Objects.Entries, Unions.ToTuple]>
->(1, ($): any => {
-  return Object.entries($)
-})
+export function entries<$ extends object>($: $) {
+  return Object.entries($) as Pipe<$, [
+    Objects.Entries,
+    Unions.ToTuple,
+  ]>
+}
 
 // mapValues - TODO
 
@@ -33,19 +34,13 @@ export const entries = dual<
 
 // camelCaseDeep - won't do
 
-export const keys = dual<
-  () => <const $ extends object>($: $) => Pipe<$, [Objects.Keys, Unions.ToTuple]>,
-  <const $ extends object>($: $) => Pipe<$, [Objects.Keys, Unions.ToTuple]>
->(1, ($): any => {
-  return Object.keys($)
-})
+export function keys<$ extends object>($: $) {
+  return Object.keys($) as Pipe<$, [Objects.Keys, Unions.ToTuple]>
+}
 
-export const values = dual<
-  () => <const $ extends object>($: $) => Pipe<$, [Objects.Values, Unions.ToTuple]>,
-  <const $ extends object>($: $) => Pipe<$, [Objects.Values, Unions.ToTuple]>
->(1, ($): any => {
-  return Object.values($)
-})
+export function values<$ extends object>($: $) {
+  return Object.values($) as Pipe<$, [Objects.Values, Unions.ToTuple]>
+}
 
 export const assign = dual<
   <const TO2 extends object>(o2: TO2) => <const $ extends object>($: $) => Call<Objects.Assign<TO2>, $>,
