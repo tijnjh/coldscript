@@ -1,6 +1,16 @@
+import { test } from 'vitest'
 import { tuples } from '..'
 
-tuples.at([1, 2, 3], 1) satisfies 2
+test("tuples.at", () => {
+  const result = tuples.at([1, 2, 3], 1)
+  const expected = 2
+
+  expect(result).toBe(expected)
+}
+
+// tuples.at([1, 2, 3], 1) satisfies 2
+
+
 
 tuples.isEmpty([]) satisfies true
 
