@@ -1,39 +1,138 @@
+import { describe, it } from 'vitest'
 import { strings } from '../index'
+import { checkTypeAndValue } from './utils'
 
-strings.length('hello') satisfies 5
+describe('strings', () => {
+  it('length', () => {
+    checkTypeAndValue({
+      input: strings.length('hello'),
+      expected: 5,
+    })
+  })
 
-strings.trim('  hello  ') satisfies 'hello'
+  it('trim', () => {
+    checkTypeAndValue({
+      input: strings.trim('  hello  '),
+      expected: 'hello',
+    })
+  })
 
-strings.trimLeft('  hello  ') satisfies 'hello  '
+  it('trimLeft', () => {
+    checkTypeAndValue({
+      input: strings.trimLeft('  hello  '),
+      expected: 'hello  ',
+    })
+  })
 
-strings.trimRight('  hello  ') satisfies '  hello'
+  it('trimRight', () => {
+    checkTypeAndValue({
+      input: strings.trimRight('  hello  '),
+      expected: '  hello',
+    })
+  })
 
-strings.replace('hello world', 'world', 'TypeScript') satisfies 'hello TypeScript'
+  it('replace', () => {
+    checkTypeAndValue({
+      input: strings.replace('hello world', 'world', 'TypeScript'),
+      expected: 'hello TypeScript',
+    })
+  })
 
-strings.slice('hello world', 0, 5) satisfies 'hello'
+  it('slice', () => {
+    checkTypeAndValue({
+      input: strings.slice('hello world', 0, 5),
+      expected: 'hello',
+    })
+  })
 
-strings.split('a,b,c', ',') satisfies ['a', 'b', 'c']
+  it('split', () => {
+    checkTypeAndValue({
+      input: strings.split('a,b,c', ','),
+      expected: ['a', 'b', 'c'],
+    })
+  })
 
-strings.repeat('abc', 3) satisfies 'abcabcabc'
+  it('repeat', () => {
+    checkTypeAndValue({
+      input: strings.repeat('abc', 3),
+      expected: 'abcabcabc',
+    })
+  })
 
-strings.startsWith('hello world', 'hello') satisfies true
+  it('startsWith', () => {
+    checkTypeAndValue({
+      input: strings.startsWith('hello world', 'hello'),
+      expected: true,
+    })
+  })
 
-strings.endsWith('hello world', 'world') satisfies true
+  it('endsWith', () => {
+    checkTypeAndValue({
+      input: strings.endsWith('hello world', 'world'),
+      expected: true,
+    })
+  })
 
-strings.toTuple('abc') satisfies ['a', 'b', 'c']
+  it('toTuple', () => {
+    checkTypeAndValue({
+      input: strings.toTuple('abc'),
+      expected: ['a', 'b', 'c'],
+    })
+  })
 
-strings.toNumber('123') satisfies 123
+  it('toNumber', () => {
+    checkTypeAndValue({
+      input: strings.toNumber('123'),
+      expected: 123,
+    })
+  })
 
-strings.toString(123) satisfies '123'
+  it('toString', () => {
+    checkTypeAndValue({
+      input: strings.toString(123),
+      expected: '123',
+    })
+  })
 
-strings.prepend('world', 'hello ') satisfies 'hello world'
+  it('prepend', () => {
+    checkTypeAndValue({
+      input: strings.prepend('world', 'hello '),
+      expected: 'hello world',
+    })
+  })
 
-strings.append('hello', ' world') satisfies 'hello world'
+  it('append', () => {
+    checkTypeAndValue({
+      input: strings.append('hello', ' world'),
+      expected: 'hello world',
+    })
+  })
 
-strings.uppercase('hello') satisfies 'HELLO'
+  it('uppercase', () => {
+    checkTypeAndValue({
+      input: strings.uppercase('hello'),
+      expected: 'HELLO',
+    })
+  })
 
-strings.lowercase('HELLO') satisfies 'hello'
+  it('lowercase', () => {
+    checkTypeAndValue({
+      input: strings.lowercase('HELLO'),
+      expected: 'hello',
+    })
+  })
 
-strings.capitalize('hello') satisfies 'Hello'
+  it('capitalize', () => {
+    checkTypeAndValue({
+      input: strings.capitalize('hello'),
+      expected: 'Hello',
+    })
+  })
 
-strings.uncapitalize('Hello') satisfies 'hello'
+  it('uncapitalize', () => {
+    checkTypeAndValue({
+      input: strings.uncapitalize('Hello'),
+      expected: 'hello',
+    })
+  })
+})

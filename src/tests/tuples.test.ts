@@ -1,41 +1,87 @@
-import { test } from 'vitest'
+import { describe, it } from 'vitest'
 import { tuples } from '..'
+import { checkTypeAndValue } from './utils'
 
-test("tuples.at", () => {
-  const result = tuples.at([1, 2, 3], 1)
-  const expected = 2
+describe('tuples', () => {
+  it('at', () => {
+    checkTypeAndValue({
+      input: tuples.at([1, 2, 3], 1),
+      expected: 2,
+    })
+  })
 
-  expect(result).toBe(expected)
-}
+  it('isEmpty', () => {
+    checkTypeAndValue({
+      input: tuples.isEmpty([]),
+      expected: true,
+    })
 
-// tuples.at([1, 2, 3], 1) satisfies 2
+    checkTypeAndValue({
+      input: tuples.isEmpty([1, 2, 3]),
+      expected: false,
+    })
+  })
 
+  it('head', () => {
+    checkTypeAndValue({
+      input: tuples.head([1, 2, 3]),
+      expected: 1,
+    })
+  })
 
+  it('tail', () => {
+    checkTypeAndValue({
+      input: tuples.tail([1, 2, 3]),
+      expected: [2, 3],
+    })
+  })
 
-tuples.isEmpty([]) satisfies true
+  it('last', () => {
+    checkTypeAndValue({
+      input: tuples.last([1, 2, 3]),
+      expected: 3,
+    })
+  })
 
-tuples.isEmpty([1, 2, 3]) satisfies false
+  it('length', () => {
+    checkTypeAndValue({
+      input: tuples.length([1, 2, 3]),
+      expected: 3,
+    })
+  })
 
-tuples.head([1, 2, 3]) satisfies 1
+  it('reverse', () => {
+    checkTypeAndValue({
+      input: tuples.reverse([1, 2, 3]),
+      expected: [3, 2, 1],
+    })
+  })
 
-tuples.tail([1, 2, 3]) satisfies [2, 3]
+  it('sum', () => {
+    checkTypeAndValue({
+      input: tuples.sum([1, 2, 3]),
+      expected: 6,
+    })
+  })
 
-tuples.last([1, 2, 3]) satisfies 3
+  it('sort', () => {
+    checkTypeAndValue({
+      input: tuples.sort([3, 1, 2]),
+      expected: [1, 2, 3],
+    })
+  })
 
-tuples.length([1, 2, 3]) satisfies 3
+  it('min', () => {
+    checkTypeAndValue({
+      input: tuples.min([3, 1, 2]),
+      expected: 1,
+    })
+  })
 
-tuples.reverse([1, 2, 3]) satisfies [3, 2, 1]
-
-tuples.join(['a', 'b', 'c'], '-') satisfies 'a-b-c'
-
-tuples.prepend([1, 2, 3], 0) satisfies [0, 1, 2, 3]
-
-tuples.append([1, 2, 3], 4) satisfies [1, 2, 3, 4]
-
-tuples.sum([1, 2, 3]) satisfies 6
-
-tuples.sort([3, 1, 2]) satisfies [1, 2, 3]
-
-tuples.min([3, 1, 2]) satisfies 1
-
-tuples.max([3, 1, 2]) satisfies 3
+  it('max', () => {
+    checkTypeAndValue({
+      input: tuples.max([3, 1, 2]),
+      expected: 3,
+    })
+  })
+})

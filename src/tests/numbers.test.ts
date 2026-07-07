@@ -1,116 +1,103 @@
-import { describe, expect, expectTypeOf, it } from 'vitest'
+import { describe, it } from 'vitest'
 import { numbers } from '../index'
+import { checkTypeAndValue } from './utils'
 
 describe('numbers', () => {
   it('add', () => {
-    const result = numbers.add(1, 2)
-    const expected = 3
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.add(1, 2),
+      expected: 3,
+    })
   })
 
   it('sub', () => {
-    const result = numbers.sub(5, 3)
-    const expected = 2
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.sub(5, 3),
+      expected: 2,
+    })
   })
 
   it('mul', () => {
-    const result = numbers.mul(2, 3)
-    const expected = 6
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.mul(2, 3),
+      expected: 6,
+    })
   })
 
   it('div', () => {
-    const result = numbers.div(10, 2)
-    const expected = 5
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.div(10, 2),
+      expected: 5,
+    })
   })
 
   it('mod', () => {
-    const result = numbers.mod(10, 3)
-    const expected = 1
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.mod(10, 3),
+      expected: 1,
+    })
   })
 
   it('max', () => {
-    const result = numbers.max(5, 10)
-    const expected = 10
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.max(5, 10),
+      expected: 10,
+    })
   })
 
   it('min', () => {
-    const result = numbers.min(5, 10)
-    const expected = 5
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.min(5, 10),
+      expected: 5,
+    })
   })
 
   it('power', () => {
-    const result = numbers.power(2, 3)
-    const expected = 8
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.power(2, 3),
+      expected: 8,
+    })
   })
 
   it('equal', () => {
-    const result = numbers.equal(5, 5)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.equal(5, 5),
+      expected: true,
+    })
   })
 
   it('notEqual', () => {
-    const result = numbers.notEqual(5, 10)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.notEqual(5, 10),
+      expected: true,
+    })
   })
 
   it('lessThan', () => {
-    const result = numbers.lessThan(5, 10)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.lessThan(5, 10),
+      expected: true,
+    })
   })
 
   it('lessThanOrEqual', () => {
-    const result = numbers.lessThanOrEqual(5, 10)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.lessThanOrEqual(5, 10),
+      expected: true,
+    })
   })
 
   it('greaterThan', () => {
-    const result = numbers.greaterThan(10, 5)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.greaterThan(10, 5),
+      expected: true,
+    })
   })
 
   it('greaterThanOrEqual', () => {
-    const result = numbers.greaterThanOrEqual(10, 5)
-    const expected = true
-
-    expectTypeOf(result).toEqualTypeOf<typeof expected>()
-    expect(result).toBe(expected)
+    checkTypeAndValue({
+      input: numbers.greaterThanOrEqual(10, 5),
+      expected: true,
+    })
   })
 })
