@@ -38,7 +38,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "test": "vitest run"
+    "test": "tsc -p tsconfig.tests.json --noEmit && vitest run"
   },
   "peerDependencies": {
     "hotscript": "^1.0.13"

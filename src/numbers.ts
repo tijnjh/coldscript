@@ -1,5 +1,5 @@
 import type { Call, Numbers } from 'hotscript'
-import { dual } from './utils/dual.ts'
+import { dual } from './utils/dual'
 
 export const add = dual<
   <N extends number>(n: N) => <$ extends number>(self: $) => Call<Numbers.Add<$, N>>,
