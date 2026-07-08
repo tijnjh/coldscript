@@ -1,106 +1,79 @@
-import type { Call, Strings } from 'hotscript'
+import type { Call, Fn as HotscriptFn, Strings } from 'hotscript'
+import type { Curried, Fn } from './utils/fn'
 import { dual } from './utils/dual'
+import { curry, fn } from './utils/fn'
 
-export function length<$ extends string>($: $) {
-  return $.length as Call<Strings.Length, $>
+/**
+ * Subject-last adapters for the trim ops. HotScript's `Trim*` aliases bake the
+ * separator's default (`" "`) into the `Sep` slot, so `curry` can't inject a
+ * custom separator through them directly — these bridge it: `arg0` is the
+ * separator, `arg1` is the string being trimmed.
+ */
+interface TrimOf extends HotscriptFn { return: Call<Strings.Trim<Extract<this['arg0'], string>>, this['arg1']> }
+interface TrimLeftOf extends HotscriptFn { return: Call<Strings.TrimLeft<Extract<this['arg0'], string>>, this['arg1']> }
+interface TrimRightOf extends HotscriptFn { return: Call<Strings.TrimRight<Extract<this['arg0'], string>>, this['arg1']> }
+
+function trimStart(str: string, sep: string): string {
+  if (sep === '')
+    return str
+  while (str.startsWith(sep))
+    str = str.slice(sep.length)
+  return str
 }
 
-export function trim<$ extends string>($: $) {
-  return $.trim() as Call<Strings.Trim, $>
+function trimEnd(str: string, sep: string): string {
+  if (sep === '')
+    return str
+  while (str.endsWith(sep))
+    str = str.slice(0, -sep.length)
+  return str
 }
 
-export function trimLeft<$ extends string>($: $) {
-  return $.trimStart() as Call<Strings.TrimLeft, $>
-}
+export const length: Fn<Strings.Length> = fn(($: string) => $.length)
 
-export function trimRight<$ extends string>($: $) {
-  return $.trimEnd() as Call<Strings.TrimRight, $>
-}
+export const trim: Curried<2, TrimOf> = curry<TrimOf>(2, ($, sep) => trimStart(trimEnd($, sep), sep))
 
-export const replace = dual<
-  <TFrom extends string, TTo extends string>(from: TFrom, to: TTo) => <$ extends string>($: $) => Call<Strings.Replace<TFrom, TTo>, $>,
-  <$ extends string, TFrom extends string, TTo extends string>($: $, from: TFrom, to: TTo) => Call<Strings.Replace<TFrom, TTo>, $>
->(3, ($, from, to): any => {
-  return $.replaceAll(from, to)
-})
+export const trimLeft: Curried<2, TrimLeftOf> = curry<TrimLeftOf>(2, ($, sep) => trimStart($, sep))
 
+export const trimRight: Curried<2, TrimRightOf> = curry<TrimRightOf>(2, ($, sep) => trimEnd($, sep))
+
+export const replace: Curried<3, Strings.Replace> = curry<Strings.Replace>(3, ($, from, to) => $.replaceAll(from, to))
+
+// slice's HotScript type is a `ComposeLeft`, which can't be partially applied
+// through `curry`, so it keeps the explicit `dual` form.
 export const slice = dual<
+  <TStart extends number, TEnd extends number>(start: TStart, end: TEnd) => Fn<Strings.Slice<TStart, TEnd>>,
   // @ts-expect-error says the type is 'possibly infinite', but it works fine
-  <TStart extends number, TEnd extends number>(start: TStart, end: TEnd) => <$ extends string>($: $) => Call<Strings.Slice<TStart, TEnd>, S>,
   <$ extends string, TStart extends number, TEnd extends number>($: $, start: TStart, end: TEnd) => Call<Strings.Slice<TStart, TEnd>, $>
 >(3, ($, start, end): any => {
   return $.slice(start, end)
 })
 
-export const split = dual<
-  <TSep extends string>(sep: TSep) => <$ extends string>($: $) => Call<Strings.Split<TSep>, $>,
-  <$ extends string, TSep extends string>($: $, sep: TSep) => Call<Strings.Split<TSep>, $>
->(2, ($, sep): any => {
-  return $.split(sep)
-})
+export const split: Curried<2, Strings.Split> = curry<Strings.Split>(2, ($, sep) => $.split(sep))
 
-export const repeat = dual<
-  <TTimes extends number>(times: TTimes) => <$ extends string>($: $) => Call<Strings.Repeat<TTimes>, $>,
-  <$ extends string, TTimes extends number>($: $, times: TTimes) => Call<Strings.Repeat<TTimes>, $>
->(2, (s, times): any => {
-  return s.repeat(times)
-})
+export const repeat: Curried<2, Strings.Repeat> = curry<Strings.Repeat>(2, ($, times) => $.repeat(times))
 
-export const startsWith = dual<
-  <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.StartsWith<TStart>, $>,
-  <$ extends string, TStart extends string>($: $, start: TStart) => Call<Strings.StartsWith<TStart>, $>
->(2, (s, start): any => {
-  return s.startsWith(start)
-})
+export const startsWith: Curried<2, Strings.StartsWith> = curry<Strings.StartsWith>(2, ($, start) => $.startsWith(start))
 
-export const endsWith = dual<
-  <TEnd extends string>(end: TEnd) => <$ extends string>($: $) => Call<Strings.EndsWith<TEnd>, $>,
-  <$ extends string, TEnd extends string>($: $, end: TEnd) => Call<Strings.EndsWith<TEnd>, $>
->(2, (s, end): any => {
-  return s.endsWith(end)
-})
+export const endsWith: Curried<2, Strings.EndsWith> = curry<Strings.EndsWith>(2, ($, end) => $.endsWith(end))
 
-export function toTuple<$ extends string>($: $) {
-  return $.split('') as Call<Strings.ToTuple, $>
-}
+export const toTuple: Fn<Strings.ToTuple> = fn(($: string) => $.split(''))
 
-export function toNumber<$ extends string>($: $) {
-  return Number($) as Call<Strings.ToNumber, $>
-}
+export const toNumber: Fn<Strings.ToNumber> = fn(($: string) => Number($))
 
-export function toString<$ extends Strings.Stringifiable>($: $) {
-  return String($) as Call<Strings.ToString, $>
-}
+export const toString: Fn<Strings.ToString> = fn(($: Strings.Stringifiable) => String($))
 
-export const prepend = dual<
-  <TStart extends string>(start: TStart) => <$ extends string>($: $) => Call<Strings.Prepend<TStart>, $>,
-  <$ extends string, TStart extends string>($: $, start: TStart) => Call<Strings.Prepend<TStart>, $>
->(2, (s, start): any => {
-  return start + s
-})
+export const prepend: Curried<2, Strings.Prepend> = curry<Strings.Prepend>(2, ($, start) => start + $)
 
-export const append = dual<
-  <TEnd extends string>(end: TEnd) => <$ extends string>($: $) => Call<Strings.Append<TEnd>, $>,
-  <$ extends string, TEnd extends string>($: $, end: TEnd) => Call<Strings.Append<TEnd>, $>
->(2, (s, end): any => {
-  return s + end
-})
+export const append: Curried<2, Strings.Append> = curry<Strings.Append>(2, ($, end) => $ + end)
 
-export function uppercase<$ extends string>($: $) {
-  return $.toUpperCase() as Call<Strings.Uppercase, $>
-}
+export const uppercase: Fn<Strings.Uppercase> = fn(($: string) => $.toUpperCase())
 
-export function lowercase<$ extends string>($: $) {
-  return $.toLowerCase() as Call<Strings.Lowercase, $>
-}
+export const lowercase: Fn<Strings.Lowercase> = fn(($: string) => $.toLowerCase())
 
-export function capitalize<$ extends string>($: $) {
-  return $.charAt(0).toUpperCase() + $.slice(1) as Call<Strings.Capitalize, $>
-}
+export const capitalize: Fn<Strings.Capitalize> = fn(($: string) => $.charAt(0).toUpperCase() + $.slice(1))
 
-export function uncapitalize<$ extends string>($: $) {
-  return $.charAt(0).toLowerCase() + $.slice(1) as Call<Strings.Uncapitalize, $>
-}
+export const uncapitalize: Fn<Strings.Uncapitalize> = fn(($: string) => $.charAt(0).toLowerCase() + $.slice(1))
 
 // snakeCase - won't do
 

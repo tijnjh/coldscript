@@ -1,20 +1,17 @@
-import type { Call, Objects, Pipe, Tuples, Unions } from 'hotscript'
-import { dual } from './utils/dual'
+import type { ComposeLeft, Objects, Tuples, Unions } from 'hotscript'
+import type { Curried, Fn } from './utils/fn'
+import { curry, fn } from './utils/fn'
 
-export function fromEntries<const $ extends [PropertyKey, unknown][]>($: $) {
-  return Object.fromEntries($) as Pipe<$, [
-    Tuples.ToUnion,
-    Objects.FromEntries,
-    Unions.ToIntersection,
-  ]>
-}
+export const fromEntries: Fn<ComposeLeft<[
+  Tuples.ToUnion,
+  Objects.FromEntries,
+  Unions.ToIntersection,
+]>> = fn((entries: [PropertyKey, unknown][]) => Object.fromEntries(entries))
 
-export function entries<const $ extends object>($: $) {
-  return Object.entries($) as Pipe<$, [
-    Objects.Entries,
-    Unions.ToTuple,
-  ]>
-}
+export const entries: Fn<ComposeLeft<[
+  Objects.Entries,
+  Unions.ToTuple,
+]>> = fn((o: object) => Object.entries(o))
 
 // mapValues - TODO
 
@@ -34,17 +31,10 @@ export function entries<const $ extends object>($: $) {
 
 // camelCaseDeep - won't do
 
-export function keys<const $ extends object>($: $) {
-  return Object.keys($) as Pipe<$, [Objects.Keys, Unions.ToTuple]>
-}
+export const keys: Fn<ComposeLeft<[Objects.Keys, Unions.ToTuple]>>
+  = fn((o: object) => Object.keys(o))
 
-export function values<const $ extends object>($: $) {
-  return Object.values($) as Pipe<$, [Objects.Values, Unions.ToTuple]>
-}
+export const values: Fn<ComposeLeft<[Objects.Values, Unions.ToTuple]>>
+  = fn((o: object) => Object.values(o))
 
-export const assign = dual<
-  <const TO2 extends object>(o2: TO2) => <const $ extends object>($: $) => Call<Objects.Assign<TO2>, $>,
-  <const $ extends object, const TO2 extends object>($: $, o2: TO2) => Call<Objects.Assign<TO2>, $>
->(2, (o, o2): any => {
-  return Object.assign(o, o2)
-})
+export const assign: Curried<2, Objects.Assign> = curry<Objects.Assign>(2, ($, o2) => Object.assign($, o2))

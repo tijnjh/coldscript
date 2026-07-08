@@ -9,21 +9,21 @@ describe('strings', () => {
   })
 
   it('trim', () => {
-    expect(strings.trim('  hello  ')).toEqual('hello')
-    // @ts-expect-error hotscript trim does not model all JS whitespace
-    expect(strings.trim('\n\t hello \r\n')).toEqual('hello')
+    expect(strings.trim('  hello  ', ' ')).toEqual('hello')
+    expect(strings.trim('xxhelloxx', 'x')).toEqual('hello')
+    expect(strings.trim('x')('xxhelloxx')).toEqual('hello')
   })
 
   it('trimLeft', () => {
-    expect(strings.trimLeft('  hello  ')).toEqual('hello  ')
-    // @ts-expect-error hotscript trim does not model all JS whitespace
-    expect(strings.trimLeft('\n hello')).toEqual('hello')
+    expect(strings.trimLeft('  hello  ', ' ')).toEqual('hello  ')
+    expect(strings.trimLeft('xxhello', 'x')).toEqual('hello')
+    expect(strings.trimLeft('x')('xxhello')).toEqual('hello')
   })
 
   it('trimRight', () => {
-    expect(strings.trimRight('  hello  ')).toEqual('  hello')
-    // @ts-expect-error hotscript trim does not model all JS whitespace
-    expect(strings.trimRight('hello\t\n')).toEqual('hello')
+    expect(strings.trimRight('  hello  ', ' ')).toEqual('  hello')
+    expect(strings.trimRight('helloxx', 'x')).toEqual('hello')
+    expect(strings.trimRight('x')('helloxx')).toEqual('hello')
   })
 
   it('replace', () => {
