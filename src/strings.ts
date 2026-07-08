@@ -75,11 +75,11 @@ export const capitalize: Fn<Strings.Capitalize> = fn(($: string) => $.charAt(0).
 
 export const uncapitalize: Fn<Strings.Uncapitalize> = fn(($: string) => $.charAt(0).toLowerCase() + $.slice(1))
 
-// snakeCase - won't do
+export const snakeCase: Fn<Strings.SnakeCase> = fn(($: string) => $.replace(/([A-Z])/g, '_$1').toLowerCase())
 
-// camelCase - won't do
+export const camelCase: Fn<Strings.CamelCase> = fn(($: string) => $.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', '')))
 
-// kebabCase - won't do
+export const kebabCase: Fn<Strings.KebabCase> = fn(($: string) => $.replace(/([A-Z])/g, '-$1').toLowerCase())
 
 // compare - TODO
 

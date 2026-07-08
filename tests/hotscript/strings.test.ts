@@ -181,4 +181,25 @@ describe('strings', () => {
     const res1 = pipe('ABC', strings.uncapitalize)
     expectEqual(res1, 'aBC')
   })
+
+  it('snakeCase', () => {
+    const res1 = pipe('helloWorldYo', strings.snakeCase)
+    expectEqual(res1, 'hello_world_yo')
+
+    const res2 = pipe('HelloWorldYo', strings.snakeCase)
+    expectEqual(res2, 'hello_world_yo')
+  })
+
+  it('kebabCase', () => {
+    const res1 = pipe('helloWorldYo', strings.kebabCase)
+    expectEqual(res1, 'hello-world-yo')
+
+    const res2 = pipe('HelloWorldYo', strings.kebabCase)
+    expectEqual(res2, 'hello-world-yo')
+  })
+
+  it('camelCase', () => {
+    const res1 = pipe('hello-world-yo', strings.camelCase)
+    expectEqual(res1, 'helloWorldYo')
+  })
 })

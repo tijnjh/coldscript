@@ -110,4 +110,16 @@ describe('strings', () => {
     expect(strings.uncapitalize('Hello')).toEqual('hello')
     expect(strings.uncapitalize('')).toEqual('')
   })
+
+  it('snakeCase', () => {
+    expect(strings.snakeCase('helloWorld')).toEqual('hello_world')
+  })
+
+  it('camelCase', () => {
+    expect(strings.camelCase('hello-world')).toEqual('helloWorld')
+  })
+
+  it('kebabCase', () => {
+    expect(strings.kebabCase('helloWorld')).toEqual('hello-world')
+  })
 })
