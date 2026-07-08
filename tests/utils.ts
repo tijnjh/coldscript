@@ -1,9 +1,9 @@
-import { expect } from 'vitest'
+import * as vitest from 'vitest'
 
-export function strictExpect<const T>(value: T) {
+export function expect<const T>(value: T) {
   return {
     toEqual: (arg: T) => {
-      expect(value).toEqual(arg)
+      vitest.expect(value).toEqual(arg)
     },
   }
 }
