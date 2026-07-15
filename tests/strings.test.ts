@@ -9,9 +9,12 @@ describe('strings', () => {
   })
 
   it('trim', () => {
+    expect(strings.trim('  hello  ')).toEqual('hello')
     expect(strings.trim('  hello  ', ' ')).toEqual('hello')
     expect(strings.trim('xxhelloxx', 'x')).toEqual('hello')
-    expect(strings.trim('x')('xxhelloxx')).toEqual('hello')
+    expect(strings.trim('ababhelloabab', 'ab')).toEqual('hello')
+    // @ts-expect-error empty separator is a HotScript recursion trap
+    expect(strings.trim('hello', '')).toEqual('hello')
   })
 
   it('trimLeft', () => {
@@ -113,13 +116,21 @@ describe('strings', () => {
 
   it('snakeCase', () => {
     expect(strings.snakeCase('helloWorld')).toEqual('hello_world')
+    expect(strings.snakeCase('HelloWorld')).toEqual('hello_world')
+    expect(strings.snakeCase('hello-world')).toEqual('hello_world')
+    expect(strings.snakeCase('Äpfel')).toEqual('Äpfel')
   })
 
   it('camelCase', () => {
     expect(strings.camelCase('hello-world')).toEqual('helloWorld')
+    expect(strings.camelCase('hello_world')).toEqual('helloWorld')
+    expect(strings.camelCase('hello--World')).toEqual('helloWorld')
   })
 
   it('kebabCase', () => {
     expect(strings.kebabCase('helloWorld')).toEqual('hello-world')
+    expect(strings.kebabCase('HelloWorld')).toEqual('hello-world')
+    expect(strings.kebabCase('hello_world')).toEqual('hello-world')
+    expect(strings.kebabCase('Äpfel')).toEqual('Äpfel')
   })
 })

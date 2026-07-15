@@ -71,8 +71,7 @@ export const some: Curried<2, SomeOf> = curry<SomeOf>(2, ($: any[], f) => $.some
 
 export const every: Curried<2, EveryOf> = curry<EveryOf>(2, ($: any[], f) => $.every(item => f(item) === true))
 
-// need to fix, runtime differs from hotscript impl
-export const sort: Fn<Tuples.Sort> = fn(($: unknown[]) => $.slice().sort())
+export const sort: Fn<Tuples.Sort> = fn(($: number[]) => $.slice().sort((a, b) => a - b))
 
 export const join: Curried<2, Tuples.Join> = curry<Tuples.Join>(2, ($, sep) => $.join(sep))
 
@@ -80,7 +79,7 @@ export const prepend: Curried<2, Tuples.Prepend> = curry<Tuples.Prepend>(2, ($, 
 
 export const append: Curried<2, Tuples.Append> = curry<Tuples.Append>(2, ($, element) => [...$, element])
 
-export const concat: Curried<2, Tuples.Concat> = curry<Tuples.Concat>(2, ($, tuple) => [...$, ...tuple])
+export const concat: Curried<2, Tuples.Concat, 'subject-first'> = curry<Tuples.Concat>(2, ($, tuple) => [...$, ...tuple], 'subject-first')
 
 export const partition: Curried<2, PartitionOf> = curry<PartitionOf>(2, ($: any[], f) => {
   const left: unknown[] = []
@@ -97,12 +96,13 @@ export const partition: Curried<2, PartitionOf> = curry<PartitionOf>(2, ($: any[
 // zipWith - TODO
 
 export const groupBy: Curried<2, GroupByOf> = curry<GroupByOf>(2, ($: any[], f) => {
-  const result: Record<PropertyKey, unknown[]> = {}
+  const groups = new Map<PropertyKey, unknown[]>()
   for (const item of $) {
     const key = f(item) as PropertyKey
-    ;(result[key] ??= []).push(item)
+    const group = groups.get(key)
+    group ? group.push(item) : groups.set(key, [item])
   }
-  return result
+  return Object.fromEntries(groups)
 })
 
 // range - TODO

@@ -16,7 +16,8 @@ describe('objects', () => {
     expectEqual(res1, [['a', string], ['b', number]])
 
     const res2 = pipe(['a', 'b'], objects.entries)
-    expectEqual(res2, [[0, 'a'], [1, 'b']])
+    // @ts-expect-error JavaScript exposes array keys as strings, unlike HotScript
+    expectEqual(res2, [['0', 'a'], ['1', 'b']])
   })
 
   it('entries >> fromEntries identity', () => {
@@ -28,8 +29,8 @@ describe('objects', () => {
 
   it('keys', () => {
     const res0 = pipe([3, 4, 5], objects.keys)
-    // @ts-expect-error
-    expectEqual(res0, [0, 1, 2])
+    // @ts-expect-error JavaScript exposes array keys as strings, unlike HotScript
+    expectEqual(res0, ['0', '1', '2'])
 
     // const res1 = pipe([true, false] as boolean[], objects.keys)
     // expectEqual(res1, )

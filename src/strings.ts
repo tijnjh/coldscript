@@ -4,12 +4,11 @@ import { dual } from './utils/dual'
 import { curry, fn } from './utils/fn'
 
 /**
- * Subject-last adapters for the trim ops. HotScript's `Trim*` aliases bake the
+ * Subject-last adapters for `trimLeft` and `trimRight`. HotScript's aliases bake the
  * separator's default (`" "`) into the `Sep` slot, so `curry` can't inject a
  * custom separator through them directly — these bridge it: `arg0` is the
  * separator, `arg1` is the string being trimmed.
  */
-interface TrimOf extends HotscriptFn { return: Call<Strings.Trim<Extract<this['arg0'], string>>, this['arg1']> }
 interface TrimLeftOf extends HotscriptFn { return: Call<Strings.TrimLeft<Extract<this['arg0'], string>>, this['arg1']> }
 interface TrimRightOf extends HotscriptFn { return: Call<Strings.TrimRight<Extract<this['arg0'], string>>, this['arg1']> }
 
@@ -31,7 +30,11 @@ function trimEnd(str: string, sep: string): string {
 
 export const length: Fn<Strings.Length> = fn(($: string) => $.length)
 
-export const trim: Curried<2, TrimOf> = curry<TrimOf>(2, ($, sep) => trimStart(trimEnd($, sep), sep))
+export function trim<const $ extends string>($: $): Call<Strings.Trim, $>
+export function trim<const $ extends string, const Sep extends string>($: $, sep: Sep): Call<Strings.Trim<Sep>, $>
+export function trim($: string, sep = ' ') {
+  return trimStart(trimEnd($, sep), sep)
+}
 
 export const trimLeft: Curried<2, TrimLeftOf> = curry<TrimLeftOf>(2, ($, sep) => trimStart($, sep))
 
@@ -75,11 +78,11 @@ export const capitalize: Fn<Strings.Capitalize> = fn(($: string) => $.charAt(0).
 
 export const uncapitalize: Fn<Strings.Uncapitalize> = fn(($: string) => $.charAt(0).toLowerCase() + $.slice(1))
 
-export const snakeCase: Fn<Strings.SnakeCase> = fn(($: string) => $.replace(/([A-Z])/g, '_$1').toLowerCase())
+export const snakeCase: Fn<Strings.SnakeCase> = fn(($: string) => $.replace(/[A-Z]/g, (letter, index) => `${index === 0 ? '' : '_'}${letter.toLowerCase()}`).replaceAll('-', '_'))
 
-export const camelCase: Fn<Strings.CamelCase> = fn(($: string) => $.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', '')))
+export const camelCase: Fn<Strings.CamelCase> = fn(($: string) => $.replace(/[-_]+(.)?/g, (_, char = '') => char.toUpperCase()))
 
-export const kebabCase: Fn<Strings.KebabCase> = fn(($: string) => $.replace(/([A-Z])/g, '-$1').toLowerCase())
+export const kebabCase: Fn<Strings.KebabCase> = fn(($: string) => $.replace(/[A-Z]/g, (letter, index) => `${index === 0 ? '' : '-'}${letter.toLowerCase()}`).replaceAll('_', '-'))
 
 // compare - TODO
 

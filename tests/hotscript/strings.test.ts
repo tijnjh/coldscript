@@ -31,10 +31,10 @@ describe('strings', () => {
   })
 
   it('trim', () => {
-    const res1 = pipe('  abc  ', strings.trim(' '))
+    const res1 = pipe('  abc  ', strings.trim)
     expectEqual(res1, 'abc')
 
-    const res2 = pipe('0001000', strings.trim('0'))
+    const res2 = pipe('0001000', value => strings.trim(value, '0'))
     expectEqual(res2, '1')
   })
 

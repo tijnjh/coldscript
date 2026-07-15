@@ -33,6 +33,11 @@ interface Parity extends Fn {
 }
 const parity = fn<Parity>((n: number) => (n % 2 === 0 ? 'even' : 'odd'))
 
+interface PropertyKeyIdentity extends Fn {
+  return: Extract<this['arg0'], PropertyKey>
+}
+const propertyKeyIdentity = fn<PropertyKeyIdentity>((key: PropertyKey) => key)
+
 describe('tuples', () => {
   it('at', () => {
     expect(tuples.at([1, 2, 3], 1)).toEqual(2)
@@ -82,8 +87,8 @@ describe('tuples', () => {
 
   it('sort', () => {
     expect(tuples.sort([3, 1, 2])).toEqual([1, 2, 3])
-    // @ts-expect-error hotscript sort differs from JS lexicographic sort
-    expect(tuples.sort([10, 2, 1])).toEqual([1, 10, 2])
+    expect(tuples.sort([10, 2, 1])).toEqual([1, 2, 10])
+    expect(tuples.sort([-1, 10, -5])).toEqual([-5, -1, 10])
     expect(tuples.sort([])).toEqual([])
   })
 
@@ -102,8 +107,8 @@ describe('tuples', () => {
   })
 
   it('concat', () => {
-    // @ts-expect-error current tuple concat type differs from runtime order
     expect(tuples.concat([1, 2], [3, 4])).toEqual([1, 2, 3, 4])
+    expect(tuples.concat([3, 4])([1, 2])).toEqual([1, 2, 3, 4])
     expect(tuples.concat([], [])).toEqual([])
   })
 
@@ -174,5 +179,9 @@ describe('tuples', () => {
   it('groupBy', () => {
     expect(tuples.groupBy([1, 2, 3, 4], parity)).toEqual({ odd: [1, 3], even: [2, 4] })
     expect(tuples.groupBy(parity)([1, 2, 3, 4])).toEqual({ odd: [1, 3], even: [2, 4] })
+
+    const prototypeGroup = tuples.groupBy(['__proto__'], propertyKeyIdentity)
+    expect(Object.hasOwn(prototypeGroup, '__proto__')).toEqual(true)
+    expect(Object.getOwnPropertyDescriptor(prototypeGroup, '__proto__')?.value).toEqual(['__proto__'])
   })
 })
